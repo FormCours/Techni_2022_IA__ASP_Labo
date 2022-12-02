@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Isopoh.Cryptography.Argon2" Version="1.1.12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EventManager.DAL\EventManager.DAL.csproj" />
+    <ProjectReference Include="..\EventManager.Domain\EventManager.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
