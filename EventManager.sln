@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventManager.WebAPI", "EventManager.WebAPI\EventManager.WebAPI.csproj", "{4A110FE3-9DC9-46EF-B678-7692B7ABA08A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventManager.WebAPI", "EventManager.WebAPI\EventManager.WebAPI.csproj", "{4A110FE3-9DC9-46EF-B678-7692B7ABA08A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventManager.BLL", "EventManager.BLL\EventManager.BLL.csproj", "{66BEC6E8-931B-4002-A570-9B13B10B2DCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventManager.BLL", "EventManager.BLL\EventManager.BLL.csproj", "{66BEC6E8-931B-4002-A570-9B13B10B2DCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventManager.DAL", "EventManager.DAL\EventManager.DAL.csproj", "{883FB267-0A21-4DC0-8DFA-5E3332239F7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventManager.DAL", "EventManager.DAL\EventManager.DAL.csproj", "{883FB267-0A21-4DC0-8DFA-5E3332239F7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventManager.Domain", "EventManager.Domain\EventManager.Domain.csproj", "{B1AAE1C9-3B88-4E3B-B3FB-451F944B4589}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventManager.Domain", "EventManager.Domain\EventManager.Domain.csproj", "{B1AAE1C9-3B88-4E3B-B3FB-451F944B4589}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "EventManager.DB", "EventManager.DB\EventManager.DB.sqlproj", "{F8A86832-8CE9-4D08-A4EE-99D2C9A3A89A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventManager.DAL.Console", "EventManager.DAL.Console\EventManager.DAL.Console.csproj", "{4A688873-0435-4CEE-BDF1-CE331764102B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{F8A86832-8CE9-4D08-A4EE-99D2C9A3A89A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8A86832-8CE9-4D08-A4EE-99D2C9A3A89A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F8A86832-8CE9-4D08-A4EE-99D2C9A3A89A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4A688873-0435-4CEE-BDF1-CE331764102B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A688873-0435-4CEE-BDF1-CE331764102B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A688873-0435-4CEE-BDF1-CE331764102B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A688873-0435-4CEE-BDF1-CE331764102B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
