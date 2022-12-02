@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="fac2a5f6-ba5c-4dae-a1e6-d3938e3e8221" ChangeDateTime="11/28/2022 15:38:13">
+    <Property Name="ElementName" Value="[dbo].[EventInfoUpdateDateTrigger]" />
+    <Property Name="ElementType" Value="SqlDmlTrigger" />
+    <Property Name="ParentElementName" Value="[dbo].[EventInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[EventInfoUpdateTrigger]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="445adfd7-6e6e-4030-adf2-28d23a13403b" ChangeDateTime="11/28/2022 15:56:36">
+    <Property Name="ElementName" Value="[dbo].[EventInfo]" />
+    <Property Name="ElementType" Value="SqlTable" />
+    <Property Name="ParentElementName" Value="[dbo]" />
+    <Property Name="ParentElementType" Value="SqlSchema" />
+    <Property Name="NewName" Value="[InfoEvent]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="1073db2d-8666-4873-9602-3352e50d403a" ChangeDateTime="11/28/2022 15:57:27">
+    <Property Name="ElementName" Value="[dbo].[EventRegistration]" />
+    <Property Name="ElementType" Value="SqlTable" />
+    <Property Name="ParentElementName" Value="[dbo]" />
+    <Property Name="ParentElementType" Value="SqlSchema" />
+    <Property Name="NewName" Value="[Registration]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="be433e50-64dd-41e5-9044-ae0741102dde" ChangeDateTime="11/28/2022 15:59:40">
+    <Property Name="ElementName" Value="[dbo].[EventInfoUpdateTrigger]" />
+    <Property Name="ElementType" Value="SqlDmlTrigger" />
+    <Property Name="ParentElementName" Value="[dbo].[InfoEvent]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[InfoEventUpdateTrigger]" />
+  </Operation>
+</Operations>
