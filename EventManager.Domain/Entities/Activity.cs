@@ -16,5 +16,23 @@
 		public DateTime? UpdateDate { get; set; }
 
 		public Member Creator { get; set; }
-	}
+
+        public override string? ToString()
+        {
+            return "Activity {" +
+                "\n\t Id: " + Id +
+                "\n\t Name: " + Name +
+                "\n\t Description: " + Description +
+                "\n\t StartDate: " + StartDate +
+                "\n\t EndDate: " + EndDate +
+                "\n\t ImageName: " + ImageName +
+                "\n\t ImageSrc: " + ImageSrc +
+                "\n\t MaxGuest: " + MaxGuest +
+                "\n\t CreatorId: " + CreatorId +
+                "\n\t IsCancel: " + IsCancel +
+                "\n\t CreateDate: " + CreateDate +
+                "\n\t UpdateDate: " + UpdateDate +
+            "\n}";
+        }
+    }
 }
