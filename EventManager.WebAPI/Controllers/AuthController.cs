@@ -3,7 +3,6 @@ using EventManager.Domain.Entities;
 using EventManager.WebAPI.DataTransferObjects;
 using EventManager.WebAPI.Helpers;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventManager.WebAPI.Controllers
