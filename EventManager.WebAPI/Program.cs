@@ -46,6 +46,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+// Add Cors config
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("DemoCors", config =>
+    {
+        // Tout autoriser
+        config.AllowAnyOrigin();
+        config.AllowAnyHeader();
+        config.AllowAnyMethod();
+
+        // Limiter l'origine de la requete
+        // config.WithOrigins("http://127.0.0.1:5500");
+    });
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -64,6 +79,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors("DemoCors");
 
 app.MapControllers();
 
