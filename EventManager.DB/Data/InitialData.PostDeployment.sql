@@ -14,7 +14,7 @@ GO
 SET IDENTITY_INSERT [Activity] ON;
 
 INSERT INTO [dbo].[Activity]([Id], [Name], [Description], [StartDate], [EndDate], [ImageName], [ImageSrc], [MaxGuest], [CreatorId], [IsCancel], [CreateDate], [UpdateDate])
- VALUES(1, 'Event Exemple', NULL, '2023-01-02 11:30', '2023-01-02 16:00', 'Exemple.png', '6079b72a-52d8-4f22-b3d9-8bd4fa50c204.png', 42, 1, 0, '2022-11-30 14:28:22.130', NULL)
+ VALUES(1, 'Event Exemple', NULL, '2023-01-02 11:30', '2023-01-02 16:00', NULL, NULL, 42, 1, 0, '2022-11-30 14:28:22.130', NULL)
 
 SET IDENTITY_INSERT [Activity] OFF;
 

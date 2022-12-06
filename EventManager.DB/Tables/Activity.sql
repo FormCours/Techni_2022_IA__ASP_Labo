@@ -14,7 +14,6 @@
 	[UpdateDate] DATETIME2 NULL,
 	
 	CONSTRAINT PK_Activity PRIMARY KEY ([Id]),
-	CONSTRAINT CK_Activity__StartDate CHECK([StartDate] >= [CreateDate]),
 	CONSTRAINT CK_Activity__EventDate CHECK([StartDate] < [EndDate]),
 	CONSTRAINT CK_Activity__MaxGuest CHECK([MaxGuest] > 0),
 	CONSTRAINT FK_Activity__Creator FOREIGN KEY ([CreatorId]) REFERENCES [Member]([Id])

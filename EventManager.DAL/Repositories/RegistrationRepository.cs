@@ -81,7 +81,10 @@ namespace EventManager.DAL.Repositories
                     registration.Activity = activity;
                     return registration;
                 },
-                new { ActivityId = activityId }
+                new { 
+                    ActivityId = activityId,
+                    MemberId = memberId
+                }
             );
             connection.Close();
 

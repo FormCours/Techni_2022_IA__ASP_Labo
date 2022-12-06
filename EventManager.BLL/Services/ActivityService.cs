@@ -83,6 +83,18 @@ namespace EventManager.BLL.Services
                 return false;
             }
 
+            Activity? activity = activityRepository.GetById(activityId);
+            if (activity == null)
+            {
+                return false;
+            }
+
+            int currentNbGuest = registrationRepository.GetByActivity(activityId).Select(r => r.NbGuest).Sum();
+            if(activity.MaxGuest < currentNbGuest + nbGuest)
+            {
+                return false;
+            }
+
             registrationRepository.Insert(new Registration()
             {
                 ActivityId = activityId,

@@ -15,7 +15,8 @@ namespace EventManager.DAL.Repositories
             connection.Open();
             IEnumerable<Activity> activities = connection.Query<Activity>(
                 "SELECT *" +
-                " FROM [Activity]"
+                " FROM [Activity]" +
+                " WHERE [IsCancel] = 0"
             );
             connection.Close();
 
@@ -33,7 +34,7 @@ namespace EventManager.DAL.Repositories
             IEnumerable<Activity> activities = connection.Query<Activity>(
                 "SELECT *" +
                 " FROM [Activity]" +
-                " WHERE [EndDate] >= GETDATE()"
+                " WHERE [EndDate] >= GETDATE() AND [IsCancel] = 0"
             );
             connection.Close();
 
@@ -64,7 +65,7 @@ namespace EventManager.DAL.Repositories
         {
             connection.Open();
             int id = connection.QuerySingle<int>(
-                "INSERT INTO [dbo].[Activity]([Name],[Description],[StartDate],[EndDate],[ImageName],[ImageSrc],[MaxGuest],[CreatorMember],[IsCancel])" +
+                "INSERT INTO [dbo].[Activity]([Name],[Description],[StartDate],[EndDate],[ImageName],[ImageSrc],[MaxGuest],[CreatorId],[IsCancel])" +
                 " OUTPUT[Inserted].[Id]" +
                 " VALUES(@Name, @Description, @StartDate, @EndDate, @ImageName, @ImageSrc, @MaxGuest, @CreatorId, @IsCancel)",
                 entity
@@ -79,15 +80,14 @@ namespace EventManager.DAL.Repositories
             connection.Open();
             int nbRow = connection.Execute(
                 "UPDATE [dbo].[Activity]" +
-                " SET [Pseudo] = @Pseudo," +
-                "     [Name] = @Namen, " +
-                "     [Description] = @Descriptionn, " +
-                "     [StartDate] = @StartDaten, " +
-                "     [EndDate] = @EndDaten, " +
-                "     [ImageName] = @ImageNamen, " +
-                "     [ImageSrc] = @ImageSrcn, " +
-                "     [MaxGuest] = @MaxGuestn, " +
-                "     [IsCancel] = @IsCandel" +
+                " SET [Name] = @Name, " +
+                "     [Description] = @Description, " +
+                "     [StartDate] = @StartDate, " +
+                "     [EndDate] = @EndDate, " +
+                "     [ImageName] = @ImageName, " +
+                "     [ImageSrc] = @ImageSrc, " +
+                "     [MaxGuest] = @MaxGuest, " +
+                "     [IsCancel] = @IsCancel" +
                 " WHERE [Id] = @Id",
                 entity
             );
