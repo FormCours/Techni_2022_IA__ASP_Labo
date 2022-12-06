@@ -2,6 +2,7 @@ using EventManager.BLL.Interfaces;
 using EventManager.BLL.Services;
 using EventManager.DAL.Interfaces;
 using EventManager.DAL.Repositories;
+using EventManager.WebAPI.Helpers;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -20,6 +21,8 @@ builder.Services.AddTransient<IRegistrationRepository, RegistrationRepository>()
 
 builder.Services.AddTransient<IMemberService, MemberService>();
 builder.Services.AddTransient<IActivityService, ActivityService>();
+
+builder.Services.AddTransient<TokenService>();
 
 builder.Services.AddControllers();
 
