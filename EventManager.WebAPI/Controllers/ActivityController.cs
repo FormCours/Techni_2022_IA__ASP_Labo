@@ -103,11 +103,6 @@ namespace EventManager.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public IActionResult Create([FromBody] ActivityDataDTO dataDTO)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             Activity data = dataDTO.ToEntity(CurrentUserId);
             Activity activity = _ActivityService.CreateActivity(data);
 
@@ -124,11 +119,6 @@ namespace EventManager.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Update([FromRoute] int id, [FromBody] ActivityDataDTO dataDTO)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             Activity? data = _ActivityService.GetActivity(id);
             if (data is null)
             {
@@ -136,7 +126,10 @@ namespace EventManager.WebAPI.Controllers
             }
             if (data.CreatorId != CurrentUserId)
             {
-                return Forbid();
+                return Problem(
+                    detail: "Only the creator can update the activity",
+                    statusCode: StatusCodes.Status403Forbidden
+                );
             }
 
             // Update data
@@ -166,7 +159,10 @@ namespace EventManager.WebAPI.Controllers
             }
             if (data.CreatorId != CurrentUserId)
             {
-                return Forbid();
+                return Problem(
+                    detail: "Only the creator can change the image",
+                    statusCode: StatusCodes.Status403Forbidden
+                );
             }
 
             // Définition du répertoire pour sauvegarder les images
@@ -211,7 +207,10 @@ namespace EventManager.WebAPI.Controllers
             }
             if (data.CreatorId != CurrentUserId)
             {
-                return Forbid();
+                return Problem(
+                    detail: "Only the creator can cancel the activity",
+                    statusCode: StatusCodes.Status403Forbidden
+                );
             }
 
             // Update data
@@ -236,7 +235,10 @@ namespace EventManager.WebAPI.Controllers
             }
             if (data.CreatorId != CurrentUserId)
             {
-                return Forbid();
+                return Problem(
+                    detail: "Only the creator can delete the activity",
+                    statusCode: StatusCodes.Status403Forbidden
+                );
             }
 
             _ActivityService.DeleteActivity(id);

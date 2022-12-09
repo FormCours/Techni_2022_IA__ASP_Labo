@@ -47,11 +47,6 @@ namespace EventManager.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public IActionResult Update([FromBody] MemberDataDTO dataDTO)
         {
-            if(!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             // Récuperation de l'id de l'utilisateur via les informations du token
             int id = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier)
                                 .Select(c => int.Parse(c.Value))

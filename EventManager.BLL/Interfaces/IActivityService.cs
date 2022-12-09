@@ -1,4 +1,5 @@
 ﻿using EventManager.Domain.Entities;
+using EventManager.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace EventManager.BLL.Interfaces
         bool CancelActivity(int activityId);
         bool DeleteActivity(int activityId);
 
-        bool RejoinActivity(int activityId, int memberId, int nbGuest);
-        bool LeaveActivity(int activityId, int memberId);
+        RegistrationResult RejoinActivity(int activityId, int memberId, int nbGuest);
+        RegistrationResult LeaveActivity(int activityId, int memberId);
     }
 }

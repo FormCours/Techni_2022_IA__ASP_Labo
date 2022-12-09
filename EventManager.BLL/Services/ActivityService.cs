@@ -1,6 +1,7 @@
 ﻿using EventManager.BLL.Interfaces;
 using EventManager.DAL.Interfaces;
 using EventManager.Domain.Entities;
+using EventManager.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,24 +76,24 @@ namespace EventManager.BLL.Services
         }
 
 
-        public bool RejoinActivity(int activityId, int memberId, int nbGuest)
+        public RegistrationResult RejoinActivity(int activityId, int memberId, int nbGuest)
         {
             Registration? previousReg = registrationRepository.GetByActivityAndMember(activityId, memberId);
             if(previousReg != null)
             {
-                return false;
+                return RegistrationResult.AlreadyExists;
             }
 
             Activity? activity = activityRepository.GetById(activityId);
             if (activity == null)
             {
-                return false;
+                return RegistrationResult.ActivityNotFound;
             }
 
             int currentNbGuest = registrationRepository.GetByActivity(activityId).Select(r => r.NbGuest).Sum();
             if(activity.MaxGuest < currentNbGuest + nbGuest)
             {
-                return false;
+                return RegistrationResult.TooManyGuest;
             }
 
             registrationRepository.Insert(new Registration()
@@ -101,18 +102,22 @@ namespace EventManager.BLL.Services
                 MemberId = memberId,
                 NbGuest = nbGuest
             });
-            return true;
+            return RegistrationResult.Success;
         }
 
-        public bool LeaveActivity(int activityId, int memberId)
+        public RegistrationResult LeaveActivity(int activityId, int memberId)
         {
             Registration? previousReg = registrationRepository.GetByActivityAndMember(activityId, memberId);
             if (previousReg == null)
             {
-                return false;
+                return RegistrationResult.NotExists;
             }
 
-            return registrationRepository.Delete(previousReg.Id);
+            if(registrationRepository.Delete(previousReg.Id))
+            {
+                return RegistrationResult.Success;
+            }
+            return RegistrationResult.Error;
         }
     }
 }

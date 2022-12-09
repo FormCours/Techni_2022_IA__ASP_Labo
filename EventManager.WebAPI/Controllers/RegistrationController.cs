@@ -5,6 +5,7 @@ using System.Security.Claims;
 using EventManager.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using EventManager.BLL.Interfaces;
+using EventManager.Domain.Enums;
 
 namespace EventManager.WebAPI.Controllers
 {
@@ -41,7 +42,10 @@ namespace EventManager.WebAPI.Controllers
             }
             if (data.CreatorId != CurrentUserId)
             {
-                return Forbid();
+                return Problem(
+                    detail: "Only the creator can get the registration list of the activity",
+                    statusCode: StatusCodes.Status403Forbidden
+                );
             }
 
             IEnumerable<MemberRegistrationDTO> registrations;
@@ -58,19 +62,35 @@ namespace EventManager.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult JoinActivity([FromRoute] int activityId, [FromBody] ActivityGuestDTO dataDTO)
+        public IActionResult JoinActivity([FromRoute] int activityId, [FromBody] RegistrationGuestDTO dataDTO)
         {
             Activity? data = _ActivityService.GetActivity(activityId);
             if (data is null)
             {
-                return NotFound();
+                return Problem(
+                    detail: "Activity not found",
+                    statusCode: StatusCodes.Status400BadRequest
+                );
             }
 
-            bool isOk = _ActivityService.RejoinActivity(activityId, CurrentUserId, dataDTO.NbGuest);
+            RegistrationResult reg = _ActivityService.RejoinActivity(activityId, CurrentUserId, (int)dataDTO.NbGuest);
 
-            if (!isOk)
+            if(reg == RegistrationResult.TooManyGuest)
             {
-                return BadRequest();
+                ModelState.AddModelError("NbGuest", "Too Many Guest");
+                return ValidationProblem();
+            }
+
+            if (reg != RegistrationResult.Success)
+            {
+                string? message = (reg == RegistrationResult.AlreadyExists) 
+                    ? "Your registration already exists"
+                    : "Error on create the registration for the activity";
+
+                return Problem(
+                    detail: message,
+                    statusCode: StatusCodes.Status400BadRequest
+                );
             }
             return NoContent();
         }
@@ -87,14 +107,20 @@ namespace EventManager.WebAPI.Controllers
             Activity? data = _ActivityService.GetActivity(activityId);
             if (data is null)
             {
-                return NotFound();
+                return Problem(
+                    detail: "Activity not found",
+                    statusCode: StatusCodes.Status400BadRequest
+                );
             }
 
-            bool isOk = _ActivityService.LeaveActivity(activityId, CurrentUserId);
+            RegistrationResult reg = _ActivityService.LeaveActivity(activityId, CurrentUserId);
 
-            if (!isOk)
+            if (reg != RegistrationResult.Success)
             {
-                return BadRequest();
+                return Problem(
+                    detail: "Error on remove the registration for the activity",
+                    statusCode: StatusCodes.Status400BadRequest
+                );
             }
             return NoContent();
         }
