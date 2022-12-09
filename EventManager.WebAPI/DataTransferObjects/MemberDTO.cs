@@ -15,17 +15,21 @@ namespace EventManager.WebAPI.DataTransferObjects
     public class MemberDataDTO
     {
         [Required]
-        [StringLength(50)]
+        [MinLength(3)]
+        [MaxLength(50)]
         public string Pseudo { get; set; }
 
         [Required]
-        [StringLength(250)]
+        [MinLength(3)]
+        [MaxLength(250)]
         public string Email { get; set; }
 
-        [StringLength(50)]
+        [MinLength(1)]
+        [MaxLength(50)]
         public string? Firstname { get; set; }
 
-        [StringLength(50)]
+        [MinLength(1)]
+        [MaxLength(50)]
         public string? Lastname { get; set; }
 
         public DateTime? Birthdate { get; set; }

@@ -18,8 +18,11 @@ namespace EventManager.WebAPI.DataTransferObjects
     public class ActivityDataDTO
     {
         [Required]
+        [MinLength(3)]
+        [MaxLength(50)]
         public string Name { get; set; }
 
+        [MaxLength(500)]
         public string? Description { get; set; }
 
         [Required]
@@ -28,6 +31,7 @@ namespace EventManager.WebAPI.DataTransferObjects
         [Required]
         public DateTime EndDate { get; set; }
 
+        [Range(1, 1_000_000)]
         public int? MaxGuest { get; set; }
     }
 
@@ -41,11 +45,5 @@ namespace EventManager.WebAPI.DataTransferObjects
     {
         public string Name { get; set; }
         public string Data { get; set; }
-    }
-
-    public class ActivityGuestDTO
-    {
-        [Required]
-        public int NbGuest { get; set; }
     }
 }
