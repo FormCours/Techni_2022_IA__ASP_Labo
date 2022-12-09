@@ -23,21 +23,25 @@ namespace EventManager.WebAPI.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AuthTokenDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Login([FromBody] AuthLoginDTO loginDTO)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
             Member? member = _MemberService.Login(loginDTO.Identifier, loginDTO.Password);
 
-            if(member is null)
+            if (member is null)
             {
                 return Problem(
                     detail: "You have entered either the Username and/or Password incorrectly.",
                     statusCode: StatusCodes.Status400BadRequest
-                ) ;
+                );
             }
 
             return Ok(new AuthTokenDTO()
@@ -48,9 +52,13 @@ namespace EventManager.WebAPI.Controllers
 
         [HttpPost("Register")]
         [AllowAnonymous]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult Register([FromBody] AuthRegisterDTO registerDTO)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }

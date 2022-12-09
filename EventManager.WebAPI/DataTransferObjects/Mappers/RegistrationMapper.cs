@@ -9,7 +9,7 @@ namespace EventManager.WebAPI.DataTransferObjects.Mappers
         {
             return new MemberRegistrationDTO()
             {
-                Member = registration.Member,
+                Member = registration.Member.ToDTO(),
                 NbGuest = registration.NbGuest
             };
         }

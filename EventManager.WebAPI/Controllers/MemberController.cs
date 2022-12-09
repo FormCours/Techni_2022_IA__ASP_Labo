@@ -22,6 +22,9 @@ namespace EventManager.WebAPI.Controllers
 
         [HttpGet("{id:int}")]
         [AllowAnonymous]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MemberDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Get([FromRoute] int id)
         {
             Member? member = _MemberService.GetMember(id);
@@ -36,6 +39,12 @@ namespace EventManager.WebAPI.Controllers
 
         [HttpPut]
         [Authorize]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public IActionResult Update([FromBody] MemberDataDTO dataDTO)
         {
             if(!ModelState.IsValid)

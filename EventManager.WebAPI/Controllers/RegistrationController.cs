@@ -27,6 +27,11 @@ namespace EventManager.WebAPI.Controllers
                                                 .SingleOrDefault(-1);
 
         [HttpGet("{activityId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<MemberRegistrationDTO>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetRegistrations([FromRoute] int activityId)
         {
             Activity? data = _ActivityService.GetActivity(activityId);
@@ -47,6 +52,12 @@ namespace EventManager.WebAPI.Controllers
         }
 
         [HttpPost("Join/{activityId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult JoinActivity([FromRoute] int activityId, [FromBody] ActivityGuestDTO dataDTO)
         {
             Activity? data = _ActivityService.GetActivity(activityId);
@@ -65,6 +76,12 @@ namespace EventManager.WebAPI.Controllers
         }
 
         [HttpPost("Leave/{activityId}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult LeaveActivity([FromRoute] int activityId)
         {
             Activity? data = _ActivityService.GetActivity(activityId);

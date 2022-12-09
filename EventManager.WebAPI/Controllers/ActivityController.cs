@@ -29,6 +29,9 @@ namespace EventManager.WebAPI.Controllers
 
         [HttpGet("{id}")]
         [AllowAnonymous]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActivityDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetEvent([FromRoute] int id)
         {
             Activity? activity = _ActivityService.GetActivity(id);
@@ -43,6 +46,9 @@ namespace EventManager.WebAPI.Controllers
 
         [HttpGet("{id}/Image")]
         [AllowAnonymous]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActivityImageDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetEventImage([FromRoute] int id)
         {
             Activity? data = _ActivityService.GetActivity(id);
@@ -64,6 +70,8 @@ namespace EventManager.WebAPI.Controllers
 
         [HttpGet("NextActivities")]
         [AllowAnonymous]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ActivityImageDTO>))]
         public IActionResult GetNextActivities()
         {
             IEnumerable<ActivityDTO> activities = _ActivityService.GetFutureActivities()
@@ -73,6 +81,10 @@ namespace EventManager.WebAPI.Controllers
         }
 
         [HttpGet("MyActivities")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ActivityImageDTO>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public IActionResult GetMyActivities()
         {
             // Récuperation des events où l'utilisateur est inscrit
@@ -84,6 +96,11 @@ namespace EventManager.WebAPI.Controllers
 
 
         [HttpPost]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public IActionResult Create([FromBody] ActivityDataDTO dataDTO)
         {
             if (!ModelState.IsValid)
@@ -98,6 +115,13 @@ namespace EventManager.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActivityDTO))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Update([FromRoute] int id, [FromBody] ActivityDataDTO dataDTO)
         {
             if (!ModelState.IsValid)
@@ -122,11 +146,17 @@ namespace EventManager.WebAPI.Controllers
             data.EndDate = dataDTO.EndDate;
             data.MaxGuest = dataDTO.MaxGuest;
 
-            Activity result = _ActivityService.UpdateActivity(data);
+            ActivityDTO result = _ActivityService.UpdateActivity(data).ToDTO();
             return Ok(result);
         }
 
         [HttpPost("{id}/UploadImage")]
+        [Consumes("multipart/form-data")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public IActionResult UpdateImage([FromRoute] int id, [FromForm] ActivityImageDataDTO imgForm)
         {
             Activity? data = _ActivityService.GetActivity(id);
@@ -167,6 +197,11 @@ namespace EventManager.WebAPI.Controllers
         }
 
         [HttpPatch("{id}/Cancel")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActivityDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public IActionResult CancelActivity([FromRoute] int id)
         {
             Activity? data = _ActivityService.GetActivity(id);
@@ -182,11 +217,16 @@ namespace EventManager.WebAPI.Controllers
             // Update data
             data.IsCancel = true;
 
-            Activity result = _ActivityService.UpdateActivity(data);
+            ActivityDTO result = _ActivityService.UpdateActivity(data).ToDTO();
             return Ok(result);
         }
 
         [HttpDelete("{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActivityDTO))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public IActionResult Delete([FromRoute] int id)
         {
             Activity? data = _ActivityService.GetActivity(id);
